@@ -1,0 +1,58 @@
+import csv
+
+def processCsv(inputFile, outputFile):
+    try:
+        with open(inputFile, 'r', newline='', encoding='utf-8') as file:
+            reader = csv.reader(file)
+
+            next(reader)
+            next(reader)
+            header = next(reader)
+            yearIndex = None
+
+            # Find the columnIndex for the year 2019
+            for i, column in enumerate(header):
+                if column == "2019":
+                    yearIndex = i
+                    break
+
+            if yearIndex is None:
+                print("Year '2019' not found")
+                return
+
+            # Find population, total data for all countries in 2019
+            result = []
+            for row in reader:
+                countryName = row[0]
+                population2019 = row[yearIndex]
+                result.append([countryName, population2019])
+
+        # Display the contents of the CSV file
+        print("The table displays population number for each country in 2019")
+        print("Country Name, Population")
+        for row in result:
+            print(*row, sep=", ")
+
+        # Organize data search for user-entered country names
+        searchCountriesInput = input("Enter a list of countries to search (separated by comma): ")
+        searchCountries = [country.strip() for country in searchCountriesInput.split(',')]
+        searchResult = []
+
+        for searchCountry in searchCountries:
+            searchResult += [row for row in result if searchCountry.lower() in row[0].lower()]
+
+        # Save the search result in a new CSV file
+        with open(outputFile, 'w', newline='', encoding='utf-8') as newFile:
+            writer = csv.writer(newFile)
+            writer.writerows(searchResult)
+
+    except FileNotFoundError:
+        print("File not found.")
+    except Exception as e:
+        print("An error occurred:", e)
+    else:
+        print("The file newLab11.csv has been successfully created with all the data. Check it out!")
+# Call the processCsv function with input and output file paths
+inputFile = "Lab11.csv"
+outputFile = "newLab11.csv"
+processCsv(inputFile, outputFile)
