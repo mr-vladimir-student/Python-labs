@@ -1,17 +1,17 @@
 def createTextFile(filename):
-    try:
-        with open(filename, "w") as file:
-            file.write("Hello, World! ")
-            file.write("Are you hungry? ")
-            file.write("If so, come and get a burger! ")
-            file.write("Bon appétit")
-    except FileNotFoundError:
-        print("Error: File not found.")
-    except Exception as e:
-        print(f"Error: {e}")
-    else:
-        print(f"{filename} has been successfully opened")
-        print("The data has been successfully written into this file!")
+  try:
+    with open(filename, "w") as file:
+      file.write("Hello, World! \n")
+      file.write("Are you hungry? \n")
+      file.write("If so, come and get a burger! \n")
+      file.write("Bon appétit \n")
+  except FileNotFoundError:
+    print("Error: File not found.")
+  except Exception as e:
+    print(f"Error: {e}")
+  else:
+    print(f"{filename} has been successfully opened")
+    print("The data has been successfully written into this file!")
 
 
 def processAndWriteFile(inputFilename, outputFilename):
