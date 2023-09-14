@@ -1,0 +1,95 @@
+import json
+
+def load_data(filename):
+    try:
+        with open(filename, 'rt') as file:
+            data = json.load(file)
+            return data
+    except FileNotFoundError:
+        return []
+
+def save_data(filename, data):
+    with open(filename, 'wt') as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
+
+def display_data(filename):
+    data = load_data(filename)
+    print(json.dumps(data, indent=4, ensure_ascii=False))
+
+def add_entry(filename, entry):
+    data = load_data(filename)
+    data.append(entry)
+    save_data(filename, data)
+
+def delete_entry(filename, entry_index):
+    data = load_data(filename)
+    if 0 <= entry_index < len(data):
+        del data[entry_index]
+        save_data(filename, data)
+        print("Record successfully deleted.")
+    else:
+        print("Error: Invalid record index.")
+
+def search_by_field(filename, field_name, field_value):
+    data = load_data(filename)
+    results = [entry for entry in data if entry.get(field_name) == field_value]
+    return results
+
+def calculate_total_students(filename):
+    data = load_data(filename)
+    total_students = sum(entry['Amount of kids'] for entry in data if entry['Institution type'] == 'school')
+    return total_students
+
+def main():
+    json_filename = 'school_data.json'
+    schools = [
+        {"Institution type": "school", "Amount of kids": 100},
+        {"Institution type": "college", "Amount of kids": 50},
+        {"Institution type": "vocational school", "Amount of kids": 30},
+        {"Institution type": "school", "Amount of kids": 80},
+        {"Institution type": "college", "Amount of kids": 60},
+        {"Institution type": "vocational school", "Amount of kids": 40}
+    ]
+    save_data(json_filename, schools)
+
+    while True:
+        print("\nMenu:")
+        print("1. Display the contents of the JSON file.")
+        print("2. Add a new entry to the JSON file.")
+        print("3. Delete an entry from the JSON file.")
+        print("4. Search for data in the JSON file by a field.")
+        print("5. Calculate the total number of students in schools.")
+        print("6. Exit the program.")
+
+        choice = input("Select an option: ")
+
+        if choice == '1':
+            display_data(json_filename)
+        elif choice == '2':
+            new_entry = {
+                'Institution type': input("Enter the institution type (school/college/vocational school): "),
+                'Amount of kids': int(input("Enter the number of students: "))
+            }
+            add_entry(json_filename, new_entry)
+        elif choice == '3':
+            index_to_delete = int(input("Enter the index of the record you want to delete (from 0): "))
+            delete_entry(json_filename, index_to_delete)
+        elif choice == '4':
+            field_name = input("Enter the field for searching: ")
+            field_value = input("Enter the value for the field: ")
+            results = search_by_field(json_filename, field_name, field_value)
+            if results:
+                print("Search results:")
+                print(json.dumps(results, indent=4))
+            else:
+                print("Nothing found.")
+        elif choice == '5':
+            total_students = calculate_total_students(json_filename)
+            print(f"Total number of students in schools: {total_students}")
+        elif choice == '6':
+            exit(0)
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
