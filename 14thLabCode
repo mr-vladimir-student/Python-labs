@@ -1,0 +1,92 @@
+# First Task Code
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0.01, 10, 1000)
+y = 5 * np.cos(10 * x) * np.sin(3 * x) / np.sqrt(x)
+
+plt.plot(x, y, label='5 * cos(10x) * sin(3x) / sqrt(x)', color="blue", linewidth=2)
+
+plt.title('Graph of Y(x)', fontsize=15)
+plt.xlabel('x', fontsize=12, color='red')
+plt.ylabel('Y(x)', fontsize=12, color='red')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Second Task Code
+import matplotlib.pyplot as plt
+
+ukraine_population = [
+    42767251, 43365219, 43924755, 44445903, 44941406, 45387091, 45809120, 46235370, 46635196, 46990889,
+    47279086, 47597756, 47974187, 48301548, 48602694, 48892187, 49144535, 49357430, 49536615, 49739734,
+    49973920, 50221000, 50384000, 50564000, 50754000, 50917000, 51097000, 51293000, 51521000, 51773000,
+    51891400, 52000500, 52150400, 52179200, 51921400, 51512800, 51057800, 50594600, 50144500, 49674000,
+    49176500, 48662400, 48202470, 47812949, 47451626, 47105171, 46787786, 46509355, 46258189, 46053331,
+    45870741, 45706086, 45593342, 45489648, 45272155, 45154036, 45004673, 44831135, 44622518, 44386203,
+    44132049, 43792855, 38000000
+]
+
+usa_population = [
+    180671000, 183691000, 186538000, 189242000, 191889000, 194303000, 196560000, 198712000, 200706000,
+    202677000, 205052000, 207661000, 209896000, 211909000, 213854000, 215973000, 218035000, 220239000,
+    222585000, 225055000, 227225000, 229466000, 231664000, 233792000, 235825000, 237924000, 240133000,
+    242289000, 244499000, 246819000, 249623000, 252981000, 256514000, 259919000, 263126000, 266278000,
+    269394000, 272657000, 275854000, 279040000, 282162411, 284968955, 287625193, 290107933, 292805298,
+    295516599, 298379912, 301231207, 304093966, 306771529, 309327143, 311583481, 313877662, 316059947,
+    318386329, 320738994, 323071755, 325122128, 326838199, 328329953, 331511512, 332031554, 333287557
+]
+
+years = list(range(1960, 2023))
+
+plt.figure(figsize=(12, 6))
+plt.plot(years, ukraine_population, label='Ukraine', marker='o')
+plt.plot(years, usa_population, label='USA', marker='o')
+
+plt.xlabel('Year')
+plt.ylabel('Population')
+plt.title('Population Dynamics: Ukraine vs. USA')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+country_name = input('Enter the country name (Ukraine or USA): ')
+
+if country_name.lower() == 'ukraine':
+    plt.figure(figsize=(10, 6))
+    plt.bar(years, ukraine_population, color='blue', alpha=0.7)
+    plt.xlabel('Year')
+    plt.ylabel('Population')
+    plt.title('Population of Ukraine Over the Years')
+    plt.show()
+elif country_name.lower() == 'usa':
+    plt.figure(figsize=(10, 6))
+    plt.bar(years, usa_population, color='red', alpha=0.7)
+    plt.xlabel('Year')
+    plt.ylabel('Population')
+    plt.title('Population of USA Over the Years')
+    plt.show()
+else:
+    print('Invalid country name. Please enter "Ukraine" or "USA".')
+
+# Third Task Code
+
+import matplotlib.pyplot as plt
+
+girls_count = 15
+boys_count = 20
+
+labels = ['Girls', 'Boys']
+sizes = [girls_count / (girls_count + boys_count) * 100, boys_count / (girls_count + boys_count) * 100]
+colors = ['pink', 'blue']
+explode = (0.1, 0)
+
+plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=140)
+plt.title('Boys / girls in 8th Grade')
+plt.show()
+
+
+
+
+
