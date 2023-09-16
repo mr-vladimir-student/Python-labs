@@ -8,13 +8,16 @@ students_data = {
     "Institution6": {"Institution Type": "college", "Number of Students": 300}
 }
 
-# Function to display all values in the dictionary
+# Function to display all values in the dictionary sorted by institution name
 def display_data(data):
-    for institution, info in data.items():
+    sorted_institutions = sorted(data.keys())
+    for institution in sorted_institutions:
+        info = data[institution]
         print(f"Institution Name: {institution}")
         print(f"Institution Type: {info['Institution Type']}")
         print(f"Number of Students: {info['Number of Students']}")
         print()
+
 
 # Function to add a new entry to the dictionary
 def add_entry(data):
