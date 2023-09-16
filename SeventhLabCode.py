@@ -17,7 +17,14 @@ def display_data(data):
         print(f"Institution Type: {info['Institution Type']}")
         print(f"Number of Students: {info['Number of Students']}")
         print()
-
+# Function to display all values in the dictionary sorted by institution type
+def display_data_sorted_by_type(data):
+    sorted_data = sorted(data.items(), key=lambda x: x[1]["Institution Type"])
+    for institution, info in sorted_data:
+        print(f"Institution Name: {institution}")
+        print(f"Institution Type: {info['Institution Type']}")
+        print(f"Number of Students: {info['Number of Students']}")
+        print()
 
 # Function to add a new entry to the dictionary
 def add_entry(data):
@@ -58,9 +65,10 @@ while True:
     print("2. Add a new entry to the dictionary")
     print("3. Remove an entry from the dictionary")
     print("4. Calculate total number of students in all schools")
-    print("5. Exit the program")
+    print("5. Display data sorted by institution type")
+    print("6. Exit the program")
 
-    choice = input("Select an option (1/2/3/4/5): ")
+    choice = input("Select an option (1/2/3/4/5/6): ")
 
     if choice == "1":
         display_data(students_data)
@@ -72,6 +80,8 @@ while True:
         total_school_students = calculate_total_school_students(students_data)
         print(f"Total number of students in all schools: {total_school_students}")
     elif choice == "5":
+        display_data_sorted_by_type(students_data)
+    elif choice == "6":
         print("Program terminated.")
         break
     else:
