@@ -1,0 +1,108 @@
+# First Task Code
+
+import nltk
+from nltk.corpus import stopwords
+import re
+nltk.download('punkt')
+import matplotlib.pyplot as plt
+from collections import Counter
+
+try:
+    File = open('chesterton-brown.txt', 'r', encoding='utf-8')
+except FileNotFoundError:
+    print("Файл не знайдено!")
+    exit(0)
+
+text = File.read()
+
+def count_words(text):
+    sentences = nltk.sent_tokenize(text)
+    k_words = 0
+
+    for sentence in sentences:
+        words = nltk.word_tokenize(sentence)
+        k_words += len(words)
+    return k_words
+
+def most_used_words(text, count):
+    if count == 1:
+        plt.title("10 найбільш вживаних слів у тексті (з пунктуацією та стоп словами)")
+        count += 1
+    else:
+        plt.title("10 найбільш вживаних слів у тексті (без стоп слів та пунктуації)")
+
+    cnt = Counter(text)
+    cort = cnt.most_common(10)
+    x = [cort[el][0] for el in range(len(cort))]
+    y = [cort[el][1] for el in range(len(cort))]
+
+    plt.bar(x, y)
+
+    plt.xlabel("Слова")
+    plt.ylabel("Зустрічаються разів у тексті")
+    plt.show()
+    return count
+
+def process_text(text):
+    # Using regular expressions to split the text into words and remove punctuation
+    words = re.findall(r'\b\w+\b', text)
+
+    # Converting to lowercase and removing stop words
+    stop_words = set(stopwords.words('english'))
+    words = [word.lower() for word in words if word.lower() not in stop_words]
+
+    return words
+
+count = 1
+# Calling the count_words function to display the result
+word_count = count_words(text)
+print(f"Total number of words in the text: {word_count}")
+
+# Calling the most_used_words function to display the most common words before processing
+text1 = text.split()
+count = most_used_words(text1, count)
+
+# Calling the process_text function to remove stop-words and punctuation
+new_text = process_text(text)
+
+# Calling the most_used_words function to display the most common words after processing
+most_used_words(new_text, count)
+
+
+# Second Task Code 
+
+import re
+import nltk
+nltk.download('wordnet')
+import string
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer, PorterStemmer
+
+# Read the input text from a file
+with open('input.txt', 'r', encoding='utf-8') as file:
+    input_text = file.read()
+
+# Tokenization by words
+words = re.findall(r'\b\w+\b', input_text)
+
+# Lemmatization and stemming
+lemmatizer = WordNetLemmatizer()
+stemmer = PorterStemmer()
+lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
+stemmed_words = [stemmer.stem(word) for word in words]
+
+# Removing stop words
+stop_words = set(stopwords.words('english'))
+filtered_words = [word for word in lemmatized_words if word.lower() not in stop_words]
+
+# Removing punctuation
+filtered_words = [word for word in filtered_words if word not in string.punctuation]
+
+# Split processed words into groups of 15 words and join them into lines
+grouped_words = [filtered_words[i:i+15] for i in range(0, len(filtered_words), 15)]
+processed_lines = [' '.join(group) for group in grouped_words]
+
+# Write the processed text to a file
+with open('output.txt', 'w', encoding='utf-8') as file:
+    file.write('\n'.join(processed_lines))
+    print("The data has been successfully processed and added to the output.txt file!")
