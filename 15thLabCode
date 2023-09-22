@@ -1,0 +1,63 @@
+# First Task Code 
+
+import pandas as pd
+
+# Initializing the dataFrame
+df = pd.DataFrame({
+    "Institution1": {"Institution Type": "school", "Number of Students": 150},
+    "Institution2": {"Institution Type": "college", "Number of Students": 100},
+    "Institution3": {"Institution Type": "vocational school", "Number of Students": 200},
+    "Institution4": {"Institution Type": "school", "Number of Students": 250},
+    "Institution5": {"Institution Type": "vocational school", "Number of Students": 350},
+    "Institution6": {"Institution Type": "college", "Number of Students": 300}
+})
+
+# Printing the data frame
+print(df)
+
+# Transposing the DataFrame to make it easier to access columns
+df = df.T
+
+# Grouping the data by institution type and displaying the overall amount of students for each group
+print("\n The overall amount of students in each type of institution")
+grouped = df.groupby("Institution Type")["Number of Students"].sum().reset_index()
+print(grouped)
+
+# Grouping the data by institution type and displaying the average amount of students for each group
+print("\n The average amount of students in each type of institution")
+averageNumber = df.groupby("Institution Type")["Number of Students"].mean().reset_index()
+print(averageNumber)
+
+# Grouping the data by institution type and finding the minimum number of students for each group
+print("\n The min number of students in each type of institution")
+minNumber = df.groupby("Institution Type")["Number of Students"].min().reset_index()
+print(minNumber)
+
+# Grouping the data by institution type and finding the maximum number of students for each group
+print("\n The max number of students in each type of institution")
+maxNumber = df.groupby("Institution Type")["Number of Students"].max().reset_index()
+print(maxNumber)
+
+# Second Task Code
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Styling the plot
+plt.style.use('ggplot')
+
+# Creating a dataFrame from the data in the data.csv file 
+pd.set_option('display.max_columns', None)
+fixed_df = pd.read_csv('data.csv',
+                       sep=',',
+                       encoding='utf-8',
+                       parse_dates=['Date'],
+                       dayfirst=True,
+                       index_col=0)
+                       
+# Printing the DataFrame
+print(fixed_df[:3])
+
+# Printing the plot
+fixed_df.plot(figsize=(15, 10))
+plt.show()
